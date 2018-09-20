@@ -39,9 +39,7 @@ public class Invoice{
     @Temporal(TemporalType.DATE)
     @Column(name="invoiceDate")
     private Date invoiceDate;
-// 
-//    @OneToMany(mappedBy="owner")
-//    private Collection<LineItem> lineitems = new ArrayList<LineItem>();
+
    
     public Invoice(){}
     public Invoice(String client,Long vatRate,Date invoiceDate){
