@@ -42,13 +42,13 @@ public class InvoiceService {
       List<Invoice> invoices = getAllInvoices();
       return invoices.stream().filter(i -> i.getId().equals(id)).findFirst().get();
   }
-//  public BigDecimal getSubTotal(){
-//      double subtotal = 0;
-//      return null;
-//  }
-//  public BigDecimal getVat(){
-//      return null;
-//  }
+  public BigDecimal getSubTotal(){
+      double subtotal = 0;
+      return null;
+  }
+  public BigDecimal getVat(){
+      return null;
+  }
     public BigDecimal getTotal(){
       List<LineItem> itemsList = new ArrayList<>();
       lineitemRepo.findAll().forEach(itemsList::add);
