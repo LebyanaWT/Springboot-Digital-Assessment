@@ -61,7 +61,7 @@ public class LineItem implements Serializable {
         this.unitPrice = unitPrice;
     }   
     
-//    private BigDecimal getLineItemTotal(){
+//    public BigDecimal getLineItemTotal(){
 //      return getUnitPrice().setScale(2, RoundingMode.HALF_UP) ;
 //    }
 }
