@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author William
  */
 public interface InvoiceRepository extends JpaRepository<Invoice,Long> {
-    public BigDecimal getSubTotal();
-    public BigDecimal getVat();
+    public abstract BigDecimal getSubTotal();
+    public abstract BigDecimal getVat();
     public abstract BigDecimal getTotal();
 }
