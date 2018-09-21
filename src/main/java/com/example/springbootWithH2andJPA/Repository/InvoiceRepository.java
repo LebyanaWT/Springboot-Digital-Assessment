@@ -1,6 +1,7 @@
 package com.example.springbootWithH2andJPA.Repository;
 
 import com.example.springbootWithH2andJPA.Entity.Invoice;
+import java.math.BigDecimal;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -8,5 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author William
  */
 public interface InvoiceRepository extends JpaRepository<Invoice,Long> {
-    
+    public BigDecimal getSubTotal();
+    public BigDecimal getVat();
+    public abstract BigDecimal getTotal();
 }

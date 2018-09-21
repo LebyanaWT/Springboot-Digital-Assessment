@@ -9,7 +9,6 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import com.example.springbootWithH2andJPA.Entity.Invoice;
 
@@ -43,21 +42,21 @@ public class InvoiceService {
       List<Invoice> invoices = getAllInvoices();
       return invoices.stream().filter(i -> i.getId().equals(id)).findFirst().get();
   }
-  public BigDecimal getSubTotal(){
-      double subtotal = 0;
-      return null;
-  }
-  public BigDecimal getVat(){
-      return null;
-  } 
+//  public BigDecimal getSubTotal(){
+//      double subtotal = 0;
+//      return null;
+//  }
+//  public BigDecimal getVat(){
+//      return null;
+//  }
     public BigDecimal getTotal(){
       List<LineItem> itemsList = new ArrayList<>();
       lineitemRepo.findAll().forEach(itemsList::add);
-  
+    BigDecimal unitCost = null;
       for(LineItem items : itemsList ){
           BigDecimal quantity = BigDecimal.valueOf(items.getQuantity()).setScale(2, RoundingMode.HALF_UP) ;
-          BigDecimal unitCost = items.getUnitPrice().setScale(2, RoundingMode.HALF_UP);    
+         unitCost = items.getUnitPrice().setScale(2, RoundingMode.HALF_UP);    
       } 
-      return total;
+      return unitCost;
     }
 }
