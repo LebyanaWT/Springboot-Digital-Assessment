@@ -38,6 +38,7 @@ public class InvoiceService {
       return invoices.stream().filter(i -> i.getId().equals(id)).findFirst().get();
   }
   public BigDecimal getSubTotal(){
+      double subtotal = 0;
       return null;
   }
   public BigDecimal getVat(){
