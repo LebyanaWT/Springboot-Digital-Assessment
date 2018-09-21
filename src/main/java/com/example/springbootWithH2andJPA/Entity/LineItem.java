@@ -2,6 +2,7 @@ package com.example.springbootWithH2andJPA.Entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -59,4 +60,8 @@ public class LineItem implements Serializable {
     public void setUnitPrice(BigDecimal unitPrice) {
         this.unitPrice = unitPrice;
     }   
+    
+//    private BigDecimal getLineItemTotal(){
+//      return getUnitPrice().setScale(2, RoundingMode.HALF_UP) ;
+//    }
 }

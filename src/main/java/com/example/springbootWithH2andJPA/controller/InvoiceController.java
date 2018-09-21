@@ -27,12 +27,11 @@ public class InvoiceController {
     
     @RequestMapping(value="/invoices",method=RequestMethod.POST)
     public Invoice addInvoice(Invoice invoiceObj){
-        System.out.println("Total Unit Cost : " + invServiceRef.getTotal() );
         return invServiceRef.addInvoice(invoiceObj);
     }
     @RequestMapping(value="/invoices",method=RequestMethod.GET)
     public List<Invoice> viewAllInvoices(){
-       return invServiceRef.getAllInvoices();
+       return invServiceRef.viewAllInvoices();
     }
     
     @RequestMapping(value="/invoices/{id}",method=RequestMethod.GET)

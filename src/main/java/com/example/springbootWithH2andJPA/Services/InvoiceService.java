@@ -18,45 +18,30 @@ import com.example.springbootWithH2andJPA.Entity.Invoice;
  */
 @Service
 public class InvoiceService {
-    
+   
+  private final BigDecimal vatPercentage = new BigDecimal(0.15);
+
   @Autowired
   InvoiceRepository invoiceRep;
  
   @Autowired
-  LineItemRepository lineitemRepo;
+  LineItemService lineItemService;
+
+    private BigDecimal total = BigDecimal.ZERO;
   
-  private LineItem lineItem; 
-  private BigDecimal total;
- 
-  public List<Invoice> getAllInvoices(){
-      List<Invoice> invoicesList = new ArrayList<>();
-      invoiceRep.findAll().forEach(invoicesList::add);
-      return invoicesList;
-  }
+    public Invoice addInvoice(Invoice invc){
+        invoiceRep.save(invc);
+        return invc;
+    }
+   
+    public List<Invoice> viewAllInvoices(){
+        List<Invoice> invoicesList = new ArrayList<>();
+        invoiceRep.findAll().forEach(invoicesList::add);
+        return invoicesList;
+    }
   
-  public Invoice addInvoice(Invoice invc){
-      invoiceRep.save(invc);
-      return invc;
-  }
-  public Invoice getInvoice(Long id){
-      List<Invoice> invoices = getAllInvoices();
-      return invoices.stream().filter(i -> i.getId().equals(id)).findFirst().get();
-  }
-  public BigDecimal getSubTotal(){
-      double subtotal = 0;
-      return null;
-  }
-  public BigDecimal getVat(){
-      return null;
-  }
-    public BigDecimal getTotal(){
-      List<LineItem> itemsList = new ArrayList<>();
-      lineitemRepo.findAll().forEach(itemsList::add);
-    BigDecimal unitCost = null;
-      for(LineItem items : itemsList ){
-          BigDecimal quantity = BigDecimal.valueOf(items.getQuantity()).setScale(2, RoundingMode.HALF_UP) ;
-         unitCost = items.getUnitPrice().setScale(2, RoundingMode.HALF_UP);    
-      } 
-      return unitCost;
+    public Invoice getInvoice(Long id){
+        List<Invoice> invoices = viewAllInvoices();
+        return invoices.stream().filter(i -> i.getId().equals(id)).findFirst().get();
     }
 }

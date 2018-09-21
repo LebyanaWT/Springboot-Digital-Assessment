@@ -1,6 +1,8 @@
 package com.example.springbootWithH2andJPA.Entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -40,6 +42,7 @@ public class Invoice{
     @Column(name="invoiceDate")
     private Date invoiceDate;
 
+    
    
     public Invoice(){}
     public Invoice(String client,Long vatRate,Date invoiceDate){
@@ -66,12 +69,29 @@ public class Invoice{
     public void setVatRate(Long vatRate) {
         this.vatRate = vatRate;
     }
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     public Date getInvoiceDate() {
         return invoiceDate;
     }
     public void setInvoiceDate(Date invoiceDate) {
         this.invoiceDate = invoiceDate;
     }  
+    
+    public BigDecimal getSubTotal(){
+        List<LineItem> itemsList = new ArrayList<>();
+        BigDecimal subtotal = BigDecimal.ZERO;
+        for(LineItem items : itemsList){
+          subtotal = subtotal.add(items.getUnitPrice()).setScale(2, RoundingMode.HALF_UP);
+        }
+        return subtotal;
+    }
+  
+    public BigDecimal getVat(){
+        return getSubTotal().multiply(new BigDecimal(getVatRate() / 100)).setScale(2, RoundingMode.HALF_UP);
+    }
+    
+    public BigDecimal getTotal(){
+      return getSubTotal().add(getVat()).setScale(2, RoundingMode.HALF_UP);
+    }
 
 }
