@@ -81,9 +81,9 @@ public class Invoice{
         List<LineItem> itemsList = new ArrayList<>();
         BigDecimal subtotal = BigDecimal.ZERO;
         for(LineItem items : itemsList){
-          subtotal = subtotal.add(items.getUnitPrice()).setScale(2, RoundingMode.HALF_UP);
+          subtotal = subtotal.add(items.getUnitPrice());
         }
-        return subtotal;
+        return subtotal.setScale(2, RoundingMode.HALF_UP);
     }
   
     public BigDecimal getVat(){
