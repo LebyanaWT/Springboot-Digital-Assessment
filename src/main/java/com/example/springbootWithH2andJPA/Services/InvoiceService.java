@@ -1,15 +1,17 @@
-
 package com.example.springbootWithH2andJPA.Services;
 
-import com.example.springbootWithH2andJPA.Entity.Invoice;
+
 import com.example.springbootWithH2andJPA.Entity.LineItem;
 import com.example.springbootWithH2andJPA.Repository.InvoiceRepository;
+import com.example.springbootWithH2andJPA.Repository.LineItemRepository;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
+import com.example.springbootWithH2andJPA.Entity.Invoice;
 
 /**
  *
@@ -21,8 +23,12 @@ public class InvoiceService {
   @Autowired
   InvoiceRepository invoiceRep;
  
-   private LineItem lineItem; 
+  @Autowired
+  LineItemRepository lineitemRepo;
   
+  private LineItem lineItem; 
+  private BigDecimal total;
+ 
   public List<Invoice> getAllInvoices(){
       List<Invoice> invoicesList = new ArrayList<>();
       invoiceRep.findAll().forEach(invoicesList::add);
@@ -44,8 +50,14 @@ public class InvoiceService {
   public BigDecimal getVat(){
       return null;
   } 
-  public BigDecimal getTotal(){
-
-   return null;
-}
+    public BigDecimal getTotal(){
+      List<LineItem> itemsList = new ArrayList<>();
+      lineitemRepo.findAll().forEach(itemsList::add);
+  
+      for(LineItem items : itemsList ){
+          BigDecimal quantity = BigDecimal.valueOf(items.getQuantity()).setScale(2, RoundingMode.HALF_UP) ;
+          BigDecimal unitCost = items.getUnitPrice().setScale(2, RoundingMode.HALF_UP);    
+      } 
+      return total;
+    }
 }
